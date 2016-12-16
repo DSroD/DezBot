@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<triggers>
+  <trigger name="donger_trigger" nsfw="false">
+    <triggerword>dong</triggerword>
+    <triggerword>dick</triggerword>
+    <triggerword>penis</triggerword>
+    <triggerword>cock</triggerword>
+    <return>(ง ͠ ͠° ل͜ °)ง ᴛʜᴇ ᴜɴsᴇᴇɴ ᴅᴏɴɢᴇʀ ɪs ᴛʜᴇ ᴅᴇᴀᴅʟɪᴇsᴛ (ง ͠° ل͜ °)ง</return>
+    <return>ヽ༼Ὸل͜ຈ༽ﾉ HOIST THY DONGERS ヽ༼Ὸل͜ຈ༽ﾉ</return>
+    <return>ヽ༼ຈل͜ຈ༽ﾉ LETS GET DONGERATED ヽ༼ຈل͜ຈ༽ﾉ</return>
+    <return>(ง'̀-'́)ง ＤＯＮＧ ＯＲ ＤＩＥ (ง'̀-'́)ง</return>
+    <return>ヽ༼ຈل͜ຈ༽ﾉ RAISE YOUR DONGERS ヽ༼ຈل͜ຈ༽ﾉ</return>
+  </trigger>
+  <trigger name="lenny_trigger" nsfw="false">
+    <triggerword>hentai</triggerword>
+    <triggerword>sex</triggerword>
+    <triggerword>anal</triggerword>
+    <triggerword> cp</triggerword>
+    <triggerword>vagina</triggerword>
+    <triggerword>cunt</triggerword>
+    <return>( ͡° ͜ʖ ͡°)</return>
+  </trigger>
+  <trigger name="salty_trigger" nsfw="false">
+    <triggerword>salt</triggerword>
+    <return>▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▄██████▄
+
+▒▒▒▒▒▒▒▒▒▒▄▄████████████▄
+▒▒▒▒▒▒▄▄██████████████████
+▒▒▒▄████▀▀▀██▀██▌███▀▀▀████
+▒▒▐▀████▌▀██▌▀▐█▌████▌█████▌
+▒▒█▒▒▀██▀▀▐█▐█▌█▌▀▀██▌██████
+▒▒█▒▒▒▒████████████████████▌
+▒▒▒▌▒▒▒▒█████░░░░░░░██████▀
+▒▒▒▀▄▓▓▓▒███░░░░░░█████▀▀
+▒▒▒▒▀░▓▓▒▐█████████▀▀▒
+▒▒▒▒▒░░▒▒▐█████▀▀▒▒▒▒▒▒
+▒▒░░░░░▀▀▀▀▀▀▒▒▒▒▒▒▒▒▒
+▒▒▒░░░░░░░░▒▒</return>
+    <return>ヽヽ｀ヽ｀、ヽヽ｀ヽ｀、ヽヽ｀ヽ、ヽヽ｀ヽ｀、ヽヽ｀ヽ｀、｀、ヽヽ｀ヽ｀、ヽヽ｀ヽ｀、ヽヽ｀ヽ｀、ヽヽ｀ヽ｀、ヽヽ｀ヽ｀、ヽヽ｀ヽ｀、ヽヽ༼ຈ ل͜ຈ༽ﾉ☂ ɪᴛs ʀᴀɪɴɪɴɢ sᴀʟᴛ! ヽ༼ຈل͜ຈ༽ﾉ☂ ヽ｀ヽ｀、ヽヽ｀ヽ｀、｀ヽ｀、ヽヽ｀ヽ｀、ヽヽ｀ヽ、ヽヽ｀ヽ</return>
+  </trigger>
+  <trigger name="vape_trigger" nsfw="false">
+    <triggerword>vape</triggerword>
+    <return>:dash: VAPE ME UP :dash: VAPE ME UP INSIDE :dash: CAN'T VAPE UP :dash: VAPE ME UP INSIDE :dash: VAPE MEEEEE :dash: CALL MY NAME AND VAPE ME :dash:</return>
+    <return>“This guy's vape is CRAZY!” VapeNation “My vape can't win against a rip like that” VapeNation “He NEEDED precisely those two clouds to win” VapeNation “He ripped the only vape that could beat me” VapeNation “He ripped the perfect vapes” VapeNation “There was nothing I could do” VapeNation “I vaped that perfectly”</return>
+  </trigger>
+  <trigger name="trump_trigger" nsfw="false">
+    <triggerword>trump</triggerword>
+    <triggerword>drumpf</triggerword>
+    <return>I sexually Identify as a Donald Trump. Ever since I was a boy I dreamed of being a billionaire from New York. People say to me that a person being Donald Trump is Impossible and I'm fucking retarded but I don't care, I'm beautiful. I'm having a bank give me a small loan of 1,000,000 dollars and install a gold wig on my head. From now on I want you guys to call me "Donald Trump" and respect my right to build a great huge wall and kill dirty Muslim immigrants and Mexicans. If you can't accept me you're a Liberal, will get sued and need to check your political privilege. Thank you for being so understanding.</return>
+    <return>( ง ͠° ͟ʖ ͡°)ง AUTISM, ATTEND ME (ง ͠° ͟ʖ ͡°)ง (ง ◉◡◔)ง READY, TRUMP! (ง ◉◡◔)ง﻿</return>
+    <return>>wake up
+>it's the future
+>Trump is the God-Emperor of Mankind and has deported the illegal aliens and conquered the Earth
+>long live the Imperium</return>
+  </trigger>
+  <trigger name="mrdka_trigger" nsfw="true">
+    <triggerword>mrdka</triggerword>
+    <triggerword>mrdky</triggerword>
+    <triggerword>mrdko</triggerword>
+    <return>Sám si mrdka!</return>
+  </trigger>
+  <trigger name="tono_trigger" nsfw="false">
+    <triggerword>Tono?</triggerword>
+    <return>Toník? Ten píčus?</return>
+  </trigger>
+  <trigger name="ayy_trigger" nsfw="false">
+    <triggerword>ayy</triggerword>
+    <return>lmao</return>
+  </trigger>
+</triggers>
