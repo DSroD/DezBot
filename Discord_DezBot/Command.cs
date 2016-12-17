@@ -34,6 +34,7 @@ namespace Discord_DezBot
 
         public string Run(Message m, string[] args)
         {
+            Task.Run(async () => { await Task.Delay(900); await m.Delete(); });
             if(requiresRole)
             {
                 foreach(Role r in m.User.Roles)

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using NAudio.Wave;
 using System.Collections.Generic;
 
+using VideoLibrary;
+
 namespace Discord_DezBot.AudioPlugin
 {
     class AudioProvider
@@ -20,11 +22,12 @@ namespace Discord_DezBot.AudioPlugin
         private DezClient _client;
         private IAudioClient _vclient;
 
+        private float volume = 0.5f;
+
         private bool _playing;
         private bool _skipThis = false;
 
         private static string _musicDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "music");
-
 
         public AudioProvider(Channel ch, DezClient c)
         {
@@ -45,31 +48,33 @@ namespace Discord_DezBot.AudioPlugin
             switch (args[0].ToLower())
             {
                 case "play":
-                    if(args.Length < 2)
+                    if (args.Length < 2)
                     {
                         return "Usage:\r\n`?music play[song] -Adds song to queue`";
                     }
                     string songName = "";
-                    for(int i = 1; i < args.Length; i++)
-                    {
-                        songName += args[i];
-                        if(i < args.Length - 1)
+                        for (int i = 1; i < args.Length; i++)
                         {
-                            songName += " ";
+                            songName += args[i];
+                            if (i < args.Length - 1)
+                            {
+                                songName += " ";
+                            }
                         }
-                    }
-                    if(!_playing)
-                    {
-                        ret = Play(songName);
-                    }
-                    else
-                    {
-                        queue.Add(songName);
-                        ret = songName + " added to Q u fuk!";
-                    }
-
-                    
-                    return ret;
+                        if (!_playing)
+                        {
+                            ret = Play(songName);
+                        }
+                        else
+                        {
+                            queue.Add(songName);
+                            if(songName.Contains("youtube.com"))
+                            {
+                                songName = GetYoutube(songName).FullName;
+                            }
+                            ret = songName + " added to Q u fuk!";
+                        }
+                        return ret;
 
                 case "list":
                     int pg;
@@ -162,6 +167,33 @@ namespace Discord_DezBot.AudioPlugin
 
                     return "Playin' all ze shiet!";
 
+                case "volume":
+                    if(args.Length < 2)
+                    {
+                        return "Usage: `?music volume [0-1]`";
+                    }
+                    else
+                    {
+                        float nvol;
+                        if(float.TryParse(args[1].Replace(".", ","), out nvol))
+                        {
+                            if(nvol > 1)
+                            {
+                                nvol = 1;
+                            }
+                            if(nvol < 0)
+                            {
+                                nvol = 0;
+                            }
+                            volume = nvol;
+                            return "Volume set to " + nvol;
+                        }
+                        else
+                        {
+                            return "Volume has to be in¨interval 0 to 1";
+                        }
+                    }
+
                 default:
                     return "Wrong Command!\r\nUsage:\r\n`?music play [song] - Adds song to queue` `?music list - Lists all the availible songs` `?music skip - Skips current song` `?music stop - Stops playin'`";
 
@@ -170,15 +202,25 @@ namespace Discord_DezBot.AudioPlugin
 
         private string Play(string song)
         {
-            if (!File.Exists(@_musicDir+"\\"+@song+@".mp3"))
+            if (song.Contains("youtube.com"))
             {
-                return song + " not found!";
+                YouTubeVideo v = GetYoutube(song);
+                string songName = GetYoutube(song).FullName;
+                SendYoutube(v);
+                return "Now playing " + songName;
             }
             else
             {
-                SendSound(_musicDir + "\\" + song + @".mp3");
-                this.song = song;
-                return "Now playing: " + song;
+                if (!File.Exists(@_musicDir + "\\" + @song + @".mp3"))
+                {
+                    return song + " not found!";
+                }
+                else
+                {
+                    SendSound(_musicDir + "\\" + song + @".mp3");
+                    this.song = song;
+                    return "Now playing: " + song;
+                }
             }
 
         }
@@ -225,8 +267,8 @@ namespace Discord_DezBot.AudioPlugin
 
                    while ((byteCount = resampler.Read(buffer, 0, blockSize)) > 0 && _playing == true)
                    {
-
-                       if (byteCount < blockSize)
+                        r.Volume = volume;
+                        if (byteCount < blockSize)
                        {
                             // Incomplete Frame
                             for (int i = byteCount; i < blockSize; i++)
@@ -247,9 +289,74 @@ namespace Discord_DezBot.AudioPlugin
                    GetNextSong();
                }
             });
-        } 
+        }
+        
+        private  YouTubeVideo GetYoutube(string url)
+        {
+            YouTube b = YouTube.Default;
+            YouTubeVideo v = b.GetVideo(url);
+            return v;
+        }
 
+        private async Task SendYoutube(YouTubeVideo video)
+        {
+            if (!_playing)
+            {
+                _vclient = await _client.GetService<AudioService>().Join(channel);
+                _playing = true;
+            }
+            _skipThis = false;
 
+            await Task.Run(() =>
+            {
+                int channelCount = _client.GetService<AudioService>().Config.Channels;
+                WaveFormat outFormat = new WaveFormat(48000, 16, channelCount);
+                MediaFoundationReader r = new MediaFoundationReader(video.Uri);
+                using (MediaFoundationResampler resampler = new MediaFoundationResampler(r, outFormat))
+                {
+                    resampler.ResamplerQuality = 60;
+                    int blockSize = outFormat.AverageBytesPerSecond / 50;
+                    byte[] buffer = new byte[blockSize];
+                    int byteCount;
+
+                    while ((byteCount = resampler.Read(buffer, 0, blockSize)) > 0 && _playing == true)
+                    {
+                        
+                        if (byteCount < blockSize)
+                        {
+                            // Incomplete Frame
+                            for (int i = byteCount; i < blockSize; i++)
+                            {
+                                buffer[i] = 0;
+                                if (_skipThis)
+                                {
+                                    _vclient.Clear();
+                                    break;
+                                }
+
+                            }
+                        }
+                        _vclient.Send(buffer, 0, blockSize);
+                        _vclient.Wait();
+                    }
+
+                    GetNextSong();
+                }
+            });
+        }
+
+        private long ReadNext3Bytes(BinaryReader reader)
+        {
+            try
+            {
+                return Math.Abs((reader.ReadByte() & 0xFF) * 256 * 256 + (reader.ReadByte() & 0xFF)
+                    * 256 + (reader.ReadByte() & 0xFF));
+            }
+            catch
+            {
+                return 0;
+            }
+        }
 
     }
 }
